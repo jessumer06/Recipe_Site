@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <title>Culinary Website</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+
+   
+    <script type="text/javascript" src="config.js"></script>
+    <script type="text/javascript" src="cont.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.js"></script>
+        <!-- Bootstrap CSS CDN -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <!-- Our Custom CSS -->
+        <link rel="stylesheet" href="sidebar.css">
+        <link rel="stylesheet" href="cont.css">
+        <!-- Scrollbar Custom CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+        <style type="text/css">
+            .effect-10{
+                border: 0; 
+                padding: 7px 15px;
+                border: 1px solid #ccc; 
+                position: relative; 
+                background: white;
+                border-top: none;
+                border-right:  none;
+                border-left: none;
+                border-bottom-width: 2px;6
+                border-bottom-color: #7386D5;
+            }
+            .effect-10 ~ .focus-bg{   
+                position: absolute; 
+                left: 0; 
+                top: 0; 
+                width: 100%;
+                height: 100%; 
+                background-color: #ededed; 
+                opacity: 0; 
+                transition: 0.5s; 
+                z-index: -1;
+            }
+            .effect-10:focus ~ .focus-bg{
+                transition: 0.5s; 
+                opacity: 1;
+            }
+            .point{
+                cursor: pointer;
+            }
+
+
+        </style>
+    </head>
+    <body>
+
+        <div class="wrapper">
+            <!-- Sidebar Holder -->
+            <nav id="sidebar">
+                <div id="dismiss">
+                    <i class="glyphicon glyphicon-arrow-left"></i>
+                </div>
+
+                <div class="sidebar-header">
+                    <h3>Ingredient Search</h3>
+                </div>
+
+                <ul class="list-unstyled components">
+                    <p id="username">User Name</p>
+                    <li class="active">
+                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Home</a>
+                        <ul class="collapse list-unstyled" id="homeSubmenu">
+                            <li><a href="#">Home 1</a></li>
+                            <li><a href="#">Home 2</a></li>
+                            <li><a href="#">Home 3</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">About</a>
+                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
+                        <ul class="collapse list-unstyled" id="pageSubmenu">
+                            <li><a href="#">Page 1</a></li>
+                            <li><a href="#">Page 2</a></li>
+                            <li><a href="#">Page 3</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Contact</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="logout();">Logout</a>
+                    </li>
+                </ul>
+
+                
+            </nav>
+
+            <!-- Page Content Holder -->
+            <div id="content">
+                <nav class="navbar navbar-default" style="background: white;">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6"><div class="navbar-header">
+                            <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                            <i class="glyphicon glyphicon-align-left"></i>
+                            </button>
+                        </div></div>
+                            <div class="col-sm-6">
+                        <div class="text-right" style="margin-top: 7px;">
+                            <input type="text" name="search" class="effect-10" placeholder="Search here...."><span class="focus-bg"></span>
+                            <!-- <button style="background: transparent;"> <i class="glyphicon glyphicon-search" ></i></button> -->
+                        </div></div>
+                        </div>
+                    </div>
+                </nav>
+                <div class="container-fluid" >
+                     <!--Carousel-->
+                     <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+      <div class="item active">
+        <img src="https://static.pexels.com/photos/70497/pexels-photo-70497.jpeg" alt="Los Angeles" style="width:100%;height: 550px;">
+      </div>
+
+      <div class="item">
+        <img src="https://static.pexels.com/photos/46239/salmon-dish-food-meal-46239.jpeg" alt="Chicago" style="width:100%;height: 550px;">
+      </div>
+    
+      <div class="item">
+<img src="https://images.unsplash.com/photo-1464219222984-216ebffaaf85?ixlib=rb-0.3.5&s=237a0b69ed40cd967d80a120e3eb8515&w=1000&q=80" alt="New york" style="width:100%;height: 550px;">
+      </div>
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+                     <!--Carousel_end-->
+                </div>
+                <!--Main content goes here-->
+                <div class="container-fluid cont">
+                    <div class="row">
+                        <div class="col-sm-3 cont-four">
+                            <div class="container"><h5>Add item</h5></div>
+                            <br><br>
+                        <div class="container">
+                            <div><i class="material-icons point" onclick="searchitem();">search</i></div>
+        <!--Here-->       <p data-toggle="collapse" data-target="#milk" class="point">Diary Products <b>+</b></p>
+                            <div id="milk" class="collapse">
+                              <div class="checkbox">
+                                <label><input type="checkbox" value="" class="ckbox">Milk</label><br>
+                                <label><input type="checkbox" value="" class="ckbox">Butter</label><br>
+                                <label><input type="checkbox" value="" class="ckbox">Curd</label><br>
+                                <label><input type="checkbox" value="" class="ckbox">Ghee</label><br>
+                              </div>
+                            </div><!--tohere-->
+                            <p data-toggle="collapse" data-target="#nv" class="point">Meat <b>+</b></p>
+                            <div id="nv" class="collapse">
+                              <div class="checkbox">
+                                <label><input type="checkbox" value="" class="ckbox">Mutton</label><br>
+                                <label><input type="checkbox" value="" class="ckbox">Fish</label><br>
+                                <label><input type="checkbox" value="" class="ckbox">Chicken</label><br>
+                                <label><input type="checkbox" value="" class="ckbox">Beef</label><br>
+                              </div>
+                            </div>
+                            <p data-toggle="collapse" data-target="#FB" class="point">Flower buds <b>+</b></p>
+                            <div id="FB" class="collapse">
+                              <div class="checkbox">
+                                <label><input type="checkbox" value="" class="ckbox">Artichoke</label><br>
+                                <label><input type="checkbox" value="" class="ckbox">Broccoli</label><br>
+                                <label><input type="checkbox" value="" class="ckbox">Cauliflower  </label><br>
+    
+                              </div>
+                            </div>
+                            <p data-toggle="collapse" data-target="#bean" class="point">Bean <b>+</b></p>
+                            <div id="bean" class="collapse">
+                              <div class="checkbox">
+                                <label><input type="checkbox" value="" class="ckbox">Indian pea</label><br>
+                                <label><input type="checkbox" value="" class="ckbox">Peanut</label><br>
+                                <label><input type="checkbox" value="" class="ckbox">American groundnut</label><br>
+                                <label><input type="checkbox" value="" class="ckbox">Green bean </label><br>
+                              </div>
+                            </div>
+                            <p data-toggle="collapse" data-target="#sv" class="point">Stem Vegetable <b>+</b></p>
+                            <div id="sv" class="collapse">
+                              <div class="checkbox">
+                                <label><input type="checkbox" value="" class="ckbox">Onion</label><br>
+                                <label><input type="checkbox" value="" class="ckbox">Garlic</label><br>
+                                <label><input type="checkbox" value="" class="ckbox">Potato onion</label><br>
+                                <label><input type="checkbox" value="" class="ckbox">Spring onion / Scallion</label><br>
+                              </div>
+                            </div>
+                            <p data-toggle="collapse" data-target="#tv" class="point">Tuberous Vegetable <b>+</b></p>
+                            <div id="tv" class="collapse">
+                              <div class="checkbox">
+                                <label><input type="checkbox" value="" class="ckbox">Beetroot</label><br>
+                                <label><input type="checkbox" value="" class="ckbox">Carrot</label><br>
+                                <label><input type="checkbox" value="" class="ckbox">Ginger</label><br>
+                                <label><input type="checkbox" value="" class="ckbox">Potato</label><br>
+                                <label><input type="checkbox" value="" class="ckbox">Radish</label><br>
+                                <label><input type="checkbox" value="" class="ckbox">Turmeric</label><br>
+                              </div>
+                            </div>
+                            <p data-toggle="collapse" data-target="#seaveg" class="point">Sea Vegetable <b>+</b></p>
+                            <div id="seaveg" class="collapse">
+                              <div class="checkbox">
+                                <label><input type="checkbox" value="" class="ckbox">Arame</label><br>
+                                <label><input type="checkbox" value="" class="ckbox">Sea Grape</label><br>
+                            <label><input type="checkbox" value="" class="ckbox">Sea lettuce</label><br>
+                                <label><input type="checkbox" value="" class="ckbox">Nori</label><br>
+                                <label><input type="checkbox" value="" class="ckbox">Kombu</label><br>
+            
+                              </div>
+                            </div>
+
+                        </div>
+                        </div>
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-8 cont-four">
+                            <div class="container"><h5>Searched Items</h5></div>
+                                <div id="items" class="row rows">
+                                </div>      
+                        </div>
+                    </div>
+
+
+                </div>
+                <!--Main content ends here-->
+
+            </div>
+        </div>
+
+
+
+        <div class="overlay"></div>
+
+
+        <!-- jQuery CDN -->
+        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <!-- Bootstrap Js CDN -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!-- jQuery Custom Scroller CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#sidebar").mCustomScrollbar({
+                    theme: "minimal"
+                });
+
+                $('#dismiss, .overlay').on('click', function () {
+                    $('#sidebar').removeClass('active');
+                    $('.overlay').fadeOut();
+                });
+
+                $('#sidebarCollapse').on('click', function () {
+                    $('#sidebar').addClass('active');
+                    $('.overlay').fadeIn();
+                    $('.collapse.in').toggleClass('in');
+                    $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+                });
+            });
+        </script>
+    </body>
+</html>
